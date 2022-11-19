@@ -13,6 +13,7 @@ from sqlalchemy.orm import joinedload
 from app import activitypub as ap
 from app import media
 from app.config import BASE_URL
+from app.config import FOLLOWERS_ONLY_INSTANCE_ALLOWLIST
 from app.database import AsyncSession
 from app.utils.datetime import as_utc
 from app.utils.datetime import now
@@ -268,6 +269,7 @@ class ActorMetadata:
     ap_actor_id: str
     is_following: bool
     is_follower: bool
+    is_on_followers_only_instance_allowlist: bool
     is_follow_request_sent: bool
     is_follow_request_rejected: bool
     outbox_follow_ap_id: str | None
@@ -357,6 +359,9 @@ async def get_actors_metadata(
             ap_actor_id=actor.ap_id,
             is_following=actor.ap_id in following,
             is_follower=actor.ap_id in followers,
+            is_on_followers_only_instance_allowlist=(
+                actor.handle.split("@")[-1] in FOLLOWERS_ONLY_INSTANCE_ALLOWLIST
+            ),
             is_follow_request_sent=actor.ap_id in sent_follow_requests,
             is_follow_request_rejected=bool(
                 sent_follow_requests[actor.ap_id] in rejected_follow_requests

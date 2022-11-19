@@ -298,6 +298,9 @@
             {% endif %}
             {% if metadata.is_follower %}
                 <li>follows you</li>
+                {% if metadata.is_on_followers_only_instance_allowlist %}
+                <li>on followers-only instance allowlist</li>
+                {% endif %}
                 {% if not metadata.is_following and not with_details %}
                     <li>{{ admin_profile_button(actor.ap_id) }}</li>
                 {% endif %}

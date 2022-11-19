@@ -29,6 +29,7 @@ from app.ap_object import RemoteObject
 from app.config import BASE_URL
 from app.config import BLOCKED_SERVERS
 from app.config import ID
+from app.config import FOLLOWERS_ONLY_INSTANCE_ALLOWLIST
 from app.config import MANUALLY_APPROVES_FOLLOWERS
 from app.config import set_moved_to
 from app.database import AsyncSession
@@ -705,6 +706,10 @@ async def send_create(
 
     recipients = await _compute_recipients(db_session, obj)
     for rcp in recipients:
+        if visibility == ap.VisibilityEnum.FOLLOWERS_ONLY and not any(
+                f"//{instance}/" in rcp for instance in FOLLOWERS_ONLY_INSTANCE_ALLOWLIST):
+            continue
+
         await new_outgoing_activity(db_session, rcp, outbox_object.id)
 
     # If the note is public, check if we need to send any webmentions

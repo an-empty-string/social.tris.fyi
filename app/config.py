@@ -100,6 +100,7 @@ class Config(pydantic.BaseModel):
     privacy_replace: list[_PrivacyReplace] | None = None
     metadata: list[_ProfileMetadata] | None = None
     code_highlighting_theme = "friendly_grayscale"
+    followers_only_instance_allowlist: list[str] = []
     blocked_servers: list[_BlockedServer] = []
     custom_footer: str | None = None
     emoji: str | None = None
@@ -196,6 +197,8 @@ EMOJI_TPL = (
 _load_emojis(ROOT_DIR, BASE_URL)
 
 CODE_HIGHLIGHTING_THEME = CONFIG.code_highlighting_theme
+
+FOLLOWERS_ONLY_INSTANCE_ALLOWLIST = CONFIG.followers_only_instance_allowlist
 
 MOVED_TO = _get_moved_to()
 
