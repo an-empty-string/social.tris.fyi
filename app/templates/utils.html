@@ -71,7 +71,7 @@
     {{ embed_csrf_token() }}
     {{ embed_redirect_url(permalink_id) }}
     <input type="hidden" name="ap_object_id" value="{{ ap_object_id }}">
-    <input type="submit" value="like">
+    <input type="submit" value="boop">
 </form>
 {% endblock %}
 {% endmacro %}
@@ -663,7 +663,7 @@
         {% if not object.is_from_outbox %}
             <li>
                 {% if object.liked_via_outbox_object_ap_id %}
-                    {{ admin_undo_button(object.liked_via_outbox_object_ap_id, "unlike", object.permalink_id) }}
+                    {{ admin_undo_button(object.liked_via_outbox_object_ap_id, "unboop", object.permalink_id) }}
                 {% else %}
                     {{ admin_like_button(object.ap_id, object.permalink_id) }}
                 {% endif %}
