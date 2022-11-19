@@ -310,6 +310,7 @@
             {% if actor.moved_to %}
             <li>has moved to {% if metadata.moved_to %}<a href="{{ url_for("admin_profile") }}?actor_id={{ actor.moved_to }}">{{ metadata.moved_to.handle }}</a>{% else %}<a href="{{ url_for("get_lookup") }}?query={{ actor.moved_to }}">{{ actor.moved_to }}</a>{% endif %}</li>
             {% endif %}
+            {#
             {% if actor.is_from_db %}
                 {% if actor.is_blocked %}
                     <li>blocked</li>
@@ -318,6 +319,7 @@
                     <li>{{ admin_block_button(actor) }}</li>
                 {% endif %}
             {% endif %}
+            #}
                 <li>{{ admin_dm_button(actor.handle) }}</li>
                 <li>{{ admin_mention_button(actor.handle) }}</li>
             {% if pending_incoming_follow_notif %}
